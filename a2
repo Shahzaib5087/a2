@@ -1,0 +1,20 @@
+import netmiko
+import difflib
+
+connectionInfo = {
+    "device_type":"cisco_ios",
+    "host":"192.168.1.1",
+    "username":"cisco",
+    "password":"cisco",
+    "secret":"class"
+    }
+    
+session = netmiko.ConnectHandler(**connectionInfo)
+session.enable()
+runConf = session.send_command("show running-config")
+runConf = session.send_command("show startup-config")
+
+#Get copy of running-config, need a similar command to get startup config
+runConf = session.send_command("show running-config")
+
+#Use difflib to compare the output of the two config files
